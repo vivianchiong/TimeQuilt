@@ -3,6 +3,7 @@ import{View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import FormInput from './loginComponents/formInput';
 import FormButton from './loginComponents/FormButton';
 import SocialButton from './loginComponents/socialButton';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 const Login = ({navigation}) =>{
   const[email, setEmail] = useState();
@@ -18,6 +19,7 @@ const Login = ({navigation}) =>{
         labelValue={email}
         onChangeText={(userEmail)=> setEmail(userEmail)}
         placeholderText="Email"
+        iconType="user"
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
@@ -27,7 +29,7 @@ const Login = ({navigation}) =>{
         onChangeText={(userPassword)=> setPassword(userPassword)}
         placeholderText="Password"
         secureTextEntry={true}
-        iconType="user"
+        iconType="lock"
       />
 
   <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
@@ -81,7 +83,8 @@ const styles = StyleSheet.create({
   logo:{
     height:150,
     width:150,
-    resizeMode:'cover'
+    resizeMode:'cover',
+    borderRadius:20
   },
   text:{
     fontSize:40,

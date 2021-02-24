@@ -1,9 +1,13 @@
 import React from 'react'; 
 import{View, TextInput, StyleSheet} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const FormInput = ({labelValue, placeholderText, ...rest}) => {
+const FormInput = ({labelValue, placeholderText, iconType, ...rest}) => {
     return(
         <View style={styles.inputContainer}>
+            <View style={styles.iconStyle}>
+                <AntDesign name={iconType} size={25} color="#666"/>
+            </View>
             <TextInput
                 value={labelValue}
                 style={styles.input}
@@ -30,6 +34,16 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center',
         backgroundColor:'#fff'
+    },
+
+    iconStyle:{
+        height:'100%',
+        padding: 10,
+        justifyContent:'center',
+        alignItems:'center',
+        borderRightColor:'#ccc',
+        borderRightWidth:1,
+        width:50,
     },
 
     input:{
