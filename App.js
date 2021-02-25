@@ -1,7 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-import Login from './screens/login.js';
+import Home from './screens/home.js';
 import * as Font from 'expo-font';
 import {AppLoading} from 'expo';
 
@@ -15,7 +15,7 @@ export default function App() {
 
   if(fontsloaded, setFontsLoaded){
     return (
-      <Login/>
+      <Home/>
     );
   }else{
     return (<AppLoading
@@ -24,7 +24,7 @@ export default function App() {
     />)
   }
   return (
-    <Login/>
+    <Home/>
   );
 }
 
