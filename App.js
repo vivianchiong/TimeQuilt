@@ -1,38 +1,23 @@
-// import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import React from 'react';
+import AppLoading from 'expo-app-loading';
+import { useFonts } from 'expo-font';
+import { StyleSheet, Text, View } from 'react-native';
+import CreatePost from './screens/createpost';
 import Login from './screens/login.js';
-import * as Font from 'expo-font';
-import {AppLoading} from 'expo';
-
-const getFonts=()=> Font.loadAsync({
-    'Rosarivo-Regular':require('./assets/fonts/Rosarivo-Regular.ttf'),
-    'Rosarivo-italic' : require('./assets/fonts/Rosarivo-Italic.ttf')
-  });
 
 export default function App() {
-  const [fontsloaded,setFontsLoaded] = useState(false);
-
-  if(fontsloaded, setFontsLoaded){
+  const [fontsLoaded] = useFonts ({
+    'Rosarivo': require('./assets/fonts/Rosarivo-Regular.ttf'),
+    'Rosario': require('./assets/fonts/Rosario-VariableFont_wght.ttf')
+  })
+  if (fontsLoaded) {
     return (
-      <Login/>
+      <CreatePost />
     );
-  }else{
-    return (<AppLoading
-      startAsync={getFonts}
-      onFinish={()=> setFontsLoaded(true)}
-    />)
   }
-  return (
-    <Login/>
-  );
+  else {
+    return ( 
+      <AppLoading />
+    )
+  } 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
