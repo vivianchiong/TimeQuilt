@@ -1,10 +1,9 @@
-// import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { StyleSheet, Text, View } from 'react-native';
 import CreatePost from './screens/createpost';
-
+import Login from './screens/login.js';
 
 export default function App() {
   const [fontsLoaded] = useFonts ({
@@ -22,12 +21,3 @@ export default function App() {
     )
   } 
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
