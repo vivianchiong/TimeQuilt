@@ -4,9 +4,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 
-
 const Tab = createMaterialBottomTabNavigator();
-
 
 function MyTabs() {
   return (
@@ -48,7 +46,6 @@ function MyTabs() {
     </Tab.Navigator>
   );
 }
-
 
 
 const Home = ({navigation})=>{
@@ -191,6 +188,4 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
   },
-  
 });
-
