@@ -13,7 +13,7 @@ const images=[
   'https://images.unsplash.com/photo-1578490057216-f69104fbf402?ixid=MXwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8OXwxMTQ4ODQ1Nnx8ZW58MHx8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=60'
 ]
 
-export default class App extends React.Component{
+export default class LookThru extends React.Component{
   state={
     active: 0
   }
