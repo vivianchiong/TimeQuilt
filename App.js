@@ -1,4 +1,3 @@
-// import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
@@ -7,7 +6,6 @@ import * as firebase from 'firebase';
 //import 'firebase/firestore';
 //import 'firebase/auth';
 import apiKeys from './config/keys';
-import CreatePost from './screens/createpost';
 import Login from './screens/login.js';
 import Home from './screens/home.js';
 import CreatePost from './screens/createpost.js';
