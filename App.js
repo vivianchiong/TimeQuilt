@@ -2,8 +2,10 @@ import React from 'react';
 import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { StyleSheet, Text, View } from 'react-native';
-import CreatePost from './screens/createpost';
 import Login from './screens/login.js';
+import Home from './screens/home.js';
+import CreatePost from './screens/createpost.js';
+import LookThru from './screens/lookthru.js';
 
 export default function App() {
   const [fontsLoaded] = useFonts ({
@@ -12,7 +14,10 @@ export default function App() {
   })
   if (fontsLoaded) {
     return (
-      <CreatePost />
+      <Login/>
+      //<Home/>
+      //<CreatePost/>
+      //<LookThru/>
     );
   }
   else {
