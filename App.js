@@ -8,6 +8,10 @@ import * as firebase from 'firebase';
 //import 'firebase/auth';
 import apiKeys from './config/keys';
 import CreatePost from './screens/createpost';
+import Login from './screens/login.js';
+import Home from './screens/home.js';
+import CreatePost from './screens/createpost.js';
+import LookThru from './screens/lookthru.js';
 
 export default function App() {
 
