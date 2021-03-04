@@ -1,2 +1,4 @@
 node_modules
 .expo
+# Firebase SDK
+config/keys.js
