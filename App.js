@@ -3,8 +3,6 @@ import AppLoading from 'expo-app-loading';
 import { useFonts } from 'expo-font';
 import { StyleSheet, Text, View } from 'react-native';
 import * as firebase from 'firebase';
-//import 'firebase/firestore';
-//import 'firebase/auth';
 import apiKeys from './config/keys';
 import Login from './screens/login.js';
 import Home from './screens/home.js';
@@ -16,7 +14,7 @@ export default function App() {
   // To make sure we are not running a firebase instance at the moment
   if (firebase.apps.length === 0) {
     console.log('Connected with Firebase!');
-    firebase.initializeApp(apiKeys.firebaseConfig);
+    firebase.initializeApp(apiKeys);
   }
 
   const [fontsLoaded] = useFonts ({
@@ -32,8 +30,8 @@ export default function App() {
     );
   }
   else {
-    return ( 
+    return (
       <AppLoading />
     )
-  } 
+  }
 }

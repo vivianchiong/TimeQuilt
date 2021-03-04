@@ -1,13 +1,30 @@
 import React, {useState} from 'react';
-import{View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
+import{View, Text, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native';
 import FormInput from './loginComponents/formInput';
 import FormButton from './loginComponents/FormButton';
 import SocialButton from './loginComponents/socialButton';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {signIn} from '../api/firebaseMethods';
 
 const Login = ({navigation}) =>{
   const[email, setEmail] = useState();
   const[password, setPassword] = useState();
+
+  const handlePress = () => {
+    alert('Log In Clicked!');
+    if (!email) {
+      Alert.alert('Email field is required.');
+    }
+
+    if (!password) {
+      Alert.alert('Password field is required.');
+    }
+
+    signIn(email, password);
+    setEmail('');
+    setPassword('');
+  };
+
   return(
     <View style = {styles.container}>
       <Image
@@ -38,7 +55,7 @@ const Login = ({navigation}) =>{
 
       <FormButton
       buttonTitle="Log In"
-      onPress={() => alert('Log In Clicked!')}
+      onPress={handlePress} // Vivian added handlePress
       />
 
       <FormButton
@@ -64,7 +81,7 @@ const Login = ({navigation}) =>{
         backgroundColor="#fab1a0"
         onPress={()=>{}}
       />
-        
+
     </View>
   );
 };
@@ -75,7 +92,7 @@ const styles = StyleSheet.create({
   container:{
     backgroundColor: '#005456',
     flex:1,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems:'center',
     padding: 20,
   },
