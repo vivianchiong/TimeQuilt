@@ -162,7 +162,8 @@ const styles = StyleSheet.create({
   iconBtnTxt:{
     alignSelf:'center',
     marginTop:5,
-    color:'#ffffff'
+    color:'#ffffff',
+    fontFamily:'Rosarivo'
   },
 
   top:{
@@ -178,6 +179,7 @@ const styles = StyleSheet.create({
     padding: 60,
     paddingLeft: 40,
     paddingRight: 40,
+    fontFamily:'Rosarivo'
   },
 
   date:{
@@ -187,5 +189,6 @@ const styles = StyleSheet.create({
     padding: 40,
     paddingLeft: 10,
     paddingRight: 10,
+    fontFamily:'Rosarivo'
   },
 });
