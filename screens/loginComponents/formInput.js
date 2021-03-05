@@ -52,7 +52,8 @@ const styles = StyleSheet.create({
         fontSize:16,
         color:'#333',
         justifyContent: 'center',
-        alignItems:'center'
+        alignItems:'center',
+        fontFamily:'Rosarivo'
     },
 
     inputField:{
