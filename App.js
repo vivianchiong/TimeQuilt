@@ -10,6 +10,7 @@ import CreatePost from './screens/createpost.js';
 import LookThru from './screens/lookthru.js';
 import Opening from './screens/opening.js';
 
+<<<<<<< HEAD
 export default function App() {
 
   // To make sure we are not running a firebase instance at the moment
@@ -18,6 +19,9 @@ export default function App() {
     firebase.initializeApp(apiKeys);
   }
 
+=======
+export default function App(){
+>>>>>>> b842819d0a2a5493a2456af67b0541a3d5d5aa02
   const [fontsLoaded] = useFonts ({
     'Rosarivo': require('./assets/fonts/Rosarivo-Regular.ttf'),
     'Rosario': require('./assets/fonts/Rosario-VariableFont_wght.ttf')
@@ -38,7 +42,11 @@ if (fontsLoaded)
     return (
       <AppLoading />
     )
+<<<<<<< HEAD
   }
+=======
+  } 
+>>>>>>> b842819d0a2a5493a2456af67b0541a3d5d5aa02
 }
 
 
