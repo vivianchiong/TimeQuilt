@@ -1,30 +1,36 @@
 import React, {useState} from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {updateDescriptionDB} from '../api/firebaseMethods';
 
-export default function CreatePost() {
+export default function CreatePost() {  // TODO: how to pass in picID??
   const [descrip, setDescription] = useState('');
 
   const changeHandler = (val) => {
     setDescription(val);
   }
 
+  const handlePress = () => {
+    alert('Submit Clicked!');
+    updateDescriptionDB(picID, descrip);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => {
       console.log('dismissed keyboard')
       Keyboard.dismiss();
     }}>
-      <View style={styles.container}> 
+      <View style={styles.container}>
         <Text style={styles.titleDay}>Monday</Text>
         <Text style={styles.titleDate}>02/07/2021</Text>
         <Image style={styles.logo} source={require('../assets/cat.jpg')} />
-        <TextInput 
-          style={styles.input} 
-          placeholder=' Say Something Special...' 
-          multiline={true} 
+        <TextInput
+          style={styles.input}
+          placeholder=' Say Something Special...'
+          multiline={true}
           numberOfLines={4}
           onChangeText={changeHandler}
         />
-        <TouchableOpacity style={styles.button} >
+        <TouchableOpacity style={styles.button} onPress={handlePress}>
           <Text style={styles.buttontext}>Submit</Text>
         </TouchableOpacity>
       </View>
