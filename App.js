@@ -9,6 +9,7 @@ import Home from './screens/home.js';
 import CreatePost from './screens/createpost.js';
 import LookThru from './screens/lookthru.js';
 import Opening from './screens/opening.js';
+import SignUp from './screens/signup';
 
 export default function App() {
 
@@ -31,18 +32,15 @@ if (fontsLoaded)
       //<Home/>
       //<CreatePost/>
       //<LookThru/>
-      <Opening/>
+      //<Opening/>
+      <SignUp/>
     );
   }
   else {
     return (
       <AppLoading />
     )
-<<<<<<< HEAD
-  }
-=======
   } 
->>>>>>> b842819d0a2a5493a2456af67b0541a3d5d5aa02
 }
 
 
