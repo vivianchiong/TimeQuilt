@@ -1,13 +1,16 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native';
 import FormInput from './loginComponents/formInput';
 import FormButton from './loginComponents/FormButton';
+import SocialButton from './loginComponents/socialButton';
 import {registration} from '../api/firebaseMethods';
+import {useState} from "react";
 
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState();
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  const [confirmPassword, setConfrimPassword] = useState();
 
   const handlePress = () => {
     alert('Sign Up Clicked!');
@@ -32,8 +35,8 @@ const SignUp = ({navigation}) => {
 
   return (
     <View style = {styles.container}>
-      <Text>SignUp</Text>
-
+      
+      <Text style = {styles.text}>Create an Account</Text>
       <FormInput
         labelValue={email}
         onChangeText={(userEmail)=> setEmail(userEmail)}
@@ -43,14 +46,6 @@ const SignUp = ({navigation}) => {
         autoCapitalize="none"
         autoCorrect={false}
       />
-
-      <FormInput
-        labelValue={username}
-        onChangeText={(userUsername)=> setUsername(userUsername)}
-        placeholderText="Username"
-        secureTextEntry={true}
-      />
-
       <FormInput
         labelValue={password}
         onChangeText={(userPassword)=> setPassword(userPassword)}
@@ -58,15 +53,54 @@ const SignUp = ({navigation}) => {
         secureTextEntry={true}
         iconType="lock"
       />
+      <FormInput
+        labelValue={confirmPassword}
+        onChangeText={(userPassword)=> setConfrimPassword(userPassword)}
+        placeholderText="Confrim Password"
+        secureTextEntry={true}
+        iconType="lock"
+      />
+
+      <View style = {styles.textPrivate}>
+        <Text style = {styles.color_textPrivate}>By registering, you confirm that you accept the {' '}</Text> 
+          <TouchableOpacity onPress={()=> alert('Terms Clicked!')}>
+          <Text style = {[styles.color_textPrivate, {color:'#e88832'}]}>Terms of Service</Text>
+          </TouchableOpacity>
+          <Text style = {styles.color_textPrivate}> and </Text>
+          <TouchableOpacity onPress={()=> alert('Privacy Clicked!')}>
+          <Text style = {[styles.color_textPrivate, {color:'#e88832'}]}>Privacy Policy</Text>
+          </TouchableOpacity>
+      </View>
 
       <FormButton
-        buttonTitle="Sign Up"
-        onPress={handlePress}
+      buttonTitle="Sign Up"
+      //onPress={() => register(email, password) 
+      onPress={() => alert('Sign Up Clicked!')}
       />
+
+    <Text style = {{fontSize: 24, color: '#ecf0f1', fontFamily:'Rosarivo'}}>or</Text>
+
+      <SocialButton
+        buttonTitle="Sign Up with Facebook"
+        btnType="facebook"
+        color="#4867aa"
+        backgroundColor="#81ecec"
+        onPress={()=>{}}
+      />
+
+      <SocialButton
+        buttonTitle="Sign Up with Google"
+        btnType="google"
+        color="#4867aa"
+        backgroundColor="#fab1a0"
+        onPress={()=>{}}
+      />
+
+      
 
     </View>
   );
-}
+};
 
 export default SignUp;
 
@@ -77,5 +111,32 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems:'center',
     padding: 20,
+  },
+
+  text:{
+    fontSize:30,
+    marginBottom:10,
+    fontFamily:'Rosarivo',
+    color: '#ecf0f1',
+    marginTop:29.1,
+  },
+  navButton:{
+    marginTop:15,
+  },
+  forgotButton:{
+    marginVertical:10,
+    marginRight:135
+  },
+  textPrivate:{
+    flexDirection:'row', 
+    flexWrap:'wrap',
+    marginVertical: 15,
+    justifyContent:'center'
+  },
+  color_textPrivate:{
+    fontSize:13,
+    fontWeight: '500',
+    color:'#ffff',
+    fontFamily:'Rosarivo',
   }
 });
