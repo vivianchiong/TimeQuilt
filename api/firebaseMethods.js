@@ -3,6 +3,9 @@ import "firebase/firestore";
 import "firebase/auth";
 import {Alert} from "react-native";
 
+/*
+ * Registers the user into the database.
+ */
 export async function registration(email, password, username) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -20,6 +23,9 @@ export async function registration(email, password, username) {
   }
 }
 
+/*
+ * Signs in the user.
+ */
 export async function signIn(email, password) {
   try {
    await firebase
@@ -30,9 +36,28 @@ export async function signIn(email, password) {
   }
 }
 
+/*
+ * Logs the current user out.
+ */
 export async function loggingOut() {
   try {
     await firebase.auth().signOut();
+  } catch (err) {
+    Alert.alert(err.message, "Please try again!");
+  }
+}
+
+/*
+ * Updates the description of a picture in the database.
+ */
+export async function updateDescriptionDB(picID, descrip) {
+  try {
+    await db.collection('pictures')
+      .doc(picID)
+      .update({
+        description: descrip
+      })
+    ;
   } catch (err) {
     Alert.alert(err.message, "Please try again!");
   }
