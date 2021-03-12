@@ -6,7 +6,7 @@ import {Alert} from "react-native";
 /*
  * Registers the user into the database.
  */
-export async function registration(email, password, username) {
+export async function registration(email, password) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
@@ -16,7 +16,7 @@ export async function registration(email, password, username) {
       .doc(currentUser.uid)
       .set({
         email: currentUser.email,
-        username: username,
+        pics: []
       });
   } catch (err) {
     Alert.alert(err.message, "Please try again!");
@@ -62,3 +62,14 @@ export async function updateDescriptionDB(picID, descrip) {
     Alert.alert(err.message, "Please try again!");
   }
 }
+
+/*
+ *
+ */
+// export async function getUserPics(userID) {
+//   try {
+//     await
+//   } catch (err) {
+
+//   }
+// }
