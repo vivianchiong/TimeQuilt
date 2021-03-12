@@ -8,34 +8,33 @@ import {useState} from "react";
 
 const SignUp = ({navigation}) => {
   const [email, setEmail] = useState();
-  const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [confirmPassword, setConfrimPassword] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
 
-  const handlePress = () => {
+  const handleSignUpPress = () => {
     alert('Sign Up Clicked!');
 
     if (!email) {
-      Alert.alert('Email field is required.');
-    }
-
-    if (!username) {
-      Alert.alert('Username field is required.');
+      Alert.alert('Email field is required', 'Please try again!');
     }
 
     if (!password) {
-      Alert.alert('Password field is required.');
+      Alert.alert('Password field is required', 'Please try again!');
     }
 
-    registration(email, password, username);
+    if (password !== confirmPassword) {
+      Alert.alert('Passwords do not match', 'Please try again!');
+    }
+
+    registration(email, password);
     setEmail('');
-    setUsername('');
     setPassword('');
+    setConfirmPassword('');
   };
 
   return (
     <View style = {styles.container}>
-      
+
       <Text style = {styles.text}>Create an Account</Text>
       <FormInput
         labelValue={email}
@@ -55,14 +54,14 @@ const SignUp = ({navigation}) => {
       />
       <FormInput
         labelValue={confirmPassword}
-        onChangeText={(userPassword)=> setConfrimPassword(userPassword)}
-        placeholderText="Confrim Password"
+        onChangeText={(userPassword)=> setConfirmPassword(userPassword)}
+        placeholderText="Confirm Password"
         secureTextEntry={true}
         iconType="lock"
       />
 
       <View style = {styles.textPrivate}>
-        <Text style = {styles.color_textPrivate}>By registering, you confirm that you accept the {' '}</Text> 
+        <Text style = {styles.color_textPrivate}>By registering, you confirm that you accept the {' '}</Text>
           <TouchableOpacity onPress={()=> alert('Terms Clicked!')}>
           <Text style = {[styles.color_textPrivate, {color:'#e88832'}]}>Terms of Service</Text>
           </TouchableOpacity>
@@ -74,8 +73,7 @@ const SignUp = ({navigation}) => {
 
       <FormButton
       buttonTitle="Sign Up"
-      //onPress={() => register(email, password) 
-      onPress={() => alert('Sign Up Clicked!')}
+      onPress={handleSignUpPress}
       />
 
     <Text style = {{fontSize: 24, color: '#ecf0f1', fontFamily:'Rosarivo'}}>or</Text>
@@ -95,8 +93,6 @@ const SignUp = ({navigation}) => {
         backgroundColor="#fab1a0"
         onPress={()=>{}}
       />
-
-      
 
     </View>
   );
@@ -128,7 +124,7 @@ const styles = StyleSheet.create({
     marginRight:135
   },
   textPrivate:{
-    flexDirection:'row', 
+    flexDirection:'row',
     flexWrap:'wrap',
     marginVertical: 15,
     justifyContent:'center'
