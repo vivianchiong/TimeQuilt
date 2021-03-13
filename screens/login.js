@@ -10,7 +10,7 @@ const Login = ({navigation}) =>{
   const[email, setEmail] = useState();
   const[password, setPassword] = useState();
 
-  const handlePress = () => {
+  const handleLoginPress = () => {
     alert('Log In Clicked!');
     if (!email) {
       Alert.alert('Email field is required.');
@@ -55,7 +55,7 @@ const Login = ({navigation}) =>{
 
       <FormButton
       buttonTitle="Log In"
-      onPress={handlePress} // Vivian added handlePress
+      onPress={handleLoginPress}
       />
 
       <FormButton
