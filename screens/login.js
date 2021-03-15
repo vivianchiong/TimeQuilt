@@ -10,7 +10,7 @@ const Login = ({navigation}) =>{
   const[email, setEmail] = useState();
   const[password, setPassword] = useState();
 
-  const handlePress = () => {
+  const handleLoginPress = () => {
     alert('Log In Clicked!');
     if (!email) {
       Alert.alert('Email field is required.');
@@ -31,7 +31,7 @@ const Login = ({navigation}) =>{
         source={require('../assets/logo1.jpg')}
         style = {styles.logo}
       />
-      <Text style = {{fontFamily:'Rosarivo-Regular'}} style = {styles.text}>Time Quilt</Text>
+      <Text style = {styles.text}>Time Quilt</Text>
       <FormInput
         labelValue={email}
         onChangeText={(userEmail)=> setEmail(userEmail)}
@@ -55,7 +55,7 @@ const Login = ({navigation}) =>{
 
       <FormButton
       buttonTitle="Log In"
-      onPress={handlePress} // Vivian added handlePress
+      onPress={handleLoginPress}
       />
 
       <FormButton
@@ -64,7 +64,7 @@ const Login = ({navigation}) =>{
       onPress={() => alert('Sign Up Clicked!')}
       />
 
-    <Text style = {{fontSize: 24, color: '#ecf0f1'}}>or</Text>
+    <Text style = {{fontSize: 24, color: '#ecf0f1', fontFamily:'Rosarivo'}}>or</Text>
 
       <SocialButton
         buttonTitle="Sign In with Facebook"
@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   text:{
     fontSize:40,
     marginBottom:10,
+    fontFamily:'Rosarivo',
     color: '#ecf0f1',
   },
   navButton:{
@@ -119,5 +120,6 @@ const styles = StyleSheet.create({
     fontSize:18,
     fontWeight:'500',
     color:'white',
+    fontFamily:'Rosarivo'
   }
 });
