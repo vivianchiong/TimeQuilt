@@ -2,9 +2,8 @@ import React from 'react';
 import { Text, View , Button, StyleSheet, StatusBar, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import * as ImagePicker from 'expo-image-picker';
 import {useState} from "react";
-import {addPicDB, addPicToUser} from '../api/firebaseMethods';
+import {addPicDB, addPicToUser, deletePicDB, openImagePickerAsync} from '../api/firebaseMethods';
 import { FontAwesome } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
@@ -52,27 +51,18 @@ function MyTabs() {
 
 
 const Home = ({navigation})=>{
-
-  // if user reclick's the image they put and selects another image, should we delete
-  // the old image from storage and the user's `pics` array? when we send a get request
-  // for the next time the user goes to home, how would we handle having 2 pics as that
-  // week's specifc day?
   const [mondayImage, setMondayImage] = useState(null);
 
-  // Request permissions to access the camera roll, then launch the picker and log the result
-  const openImagePickerAsync = async () => {
-    let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-    if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
-      return;
-    }
-
-    let result = await ImagePicker.launchImageLibraryAsync();
+  const handleMondayPress = async () => {
+    let result = await openImagePickerAsync();
 
     if (result.cancelled !== true) {
-      setMondayImage({ uri: result.uri }); // Store away the picked image uri
-      const picID = addPicDB(result.uri);
+      // if user already has an image for that day, delete it from storage and user's pics[] before adding new pic
+      if (mondayImage !== null) {
+        deletePicDB(mondayImage.id);
+      }
+      let picID = await addPicDB(result.uri, 0);
+      setMondayImage({ id: picID, uri: result.uri }); // store away the picked image's db picID and uri
       // addPicToUser(picID); commenting out for now bc we don't have navigation and currentUser being preserved yet
     }
   };
@@ -87,10 +77,10 @@ const Home = ({navigation})=>{
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={openImagePickerAsync}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleMondayPress}>
         <View style={styles.photoIcon}>
           {
-            mondayImage == null
+            mondayImage === null
             ? <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
             : <Image source={{ uri: mondayImage.uri } } style={styles.userPic}/>
           }

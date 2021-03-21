@@ -13,7 +13,7 @@ import SignUp from './screens/signup';
 
 export default function App() {
 
-  // To make sure we are not running a firebase instance at the moment
+  // make sure we are not running a firebase instance at the moment
   if (firebase.apps.length === 0) {
     console.log('Connected with Firebase!');
     firebase.initializeApp(apiKeys);
@@ -23,24 +23,18 @@ export default function App() {
     'Rosarivo': require('./assets/fonts/Rosarivo-Regular.ttf'),
     'Rosario': require('./assets/fonts/Rosario-VariableFont_wght.ttf')
   })
-  
-if (fontsLoaded) 
-  {
+  if (fontsLoaded) {
     return (
- 
-      //<Login/>
-      //<Home/>
+      // <Login/>
+      <Home/>
       //<CreatePost/>
       //<LookThru/>
       //<Opening/>
-      <SignUp/>
+      // <SignUp/>
     );
-  }
-  else {
+  } else {
     return (
       <AppLoading />
-    )
-  } 
+    );
+  }
 }
-
-
