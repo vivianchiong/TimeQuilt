@@ -10,6 +10,7 @@ import CreatePost from './screens/createpost.js';
 import LookThru from './screens/lookthru.js';
 import Opening from './screens/opening.js';
 import SignUp from './screens/signup';
+import Album from './screens/album';
 
 export default function App() {
 
@@ -25,12 +26,13 @@ export default function App() {
   })
   if (fontsLoaded) {
     return (
-      // <Login/>
-      <Home/>
+      //<Login/>
+      //<Home/>
       //<CreatePost/>
       //<LookThru/>
       //<Opening/>
-      // <SignUp/>
+      //<SignUp/>
+      <Album/>
     );
   } else {
     return (
