@@ -1,8 +1,10 @@
 import React from 'react';
-import { Text, View , Button, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
+import { Text, View , Button, StyleSheet, StatusBar, TouchableOpacity, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import {useState} from "react";
+import {addPicDB, addPicToUser, deletePicDB, openImagePickerAsync} from '../api/firebaseMethods';
+import { FontAwesome } from "@expo/vector-icons";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -49,20 +51,39 @@ function MyTabs() {
 
 
 const Home = ({navigation})=>{
+  const [mondayImage, setMondayImage] = useState(null);
+
+  const handleMondayPress = async () => {
+    let result = await openImagePickerAsync();
+
+    if (result.cancelled !== true) {
+      // if user already has an image for that day, delete it from storage and user's pics[] before adding new pic
+      if (mondayImage !== null) {
+        deletePicDB(mondayImage.id);
+      }
+      let picID = await addPicDB(result.uri, 0);
+      setMondayImage({ id: picID, uri: result.uri }); // store away the picked image's db picID and uri
+      // addPicToUser(picID); commenting out for now bc we don't have navigation and currentUser being preserved yet
+    }
+  };
 
   return(
     <View style = {styles.container}>
       <View style={styles.overlayContainer}>
         <View style = {styles.top}>
-          <Text style={styles.header}>Current Week</Text> 
-          <Text style={styles.date}>2/08/2021-2/14/2021</Text> 
+          <Text style={styles.header}>Current Week</Text>
+          <Text style={styles.date}>2/08/2021-2/14/2021</Text>
         </View>
       </View>
-      
+
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleMondayPress}>
         <View style={styles.photoIcon}>
-          <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
+          {
+            mondayImage === null
+            ? <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
+            : <Image source={{ uri: mondayImage.uri } } style={styles.userPic}/>
+          }
         </View>
         <Text style={styles.iconBtnTxt}>Monday</Text>
         </TouchableOpacity>
@@ -80,7 +101,7 @@ const Home = ({navigation})=>{
         </View>
         <Text style={styles.iconBtnTxt}>Wednesday</Text>
         </TouchableOpacity>
-        
+
       </View>
 
       <View style = {styles.photoContainer}>
@@ -104,7 +125,7 @@ const Home = ({navigation})=>{
         </View>
         <Text style={styles.iconBtnTxt}>Saturday</Text>
         </TouchableOpacity>
-        
+
       </View>
 
       <View style = {styles.photoContainer}>
@@ -114,7 +135,7 @@ const Home = ({navigation})=>{
         </View>
         <Text style={styles.iconBtnTxt}>Sunday</Text>
         </TouchableOpacity>
-        
+
       </View>
 
 
@@ -122,13 +143,13 @@ const Home = ({navigation})=>{
   );
 };
 
-export default Home; 
+export default Home;
 
 const styles = StyleSheet.create({
   container:{
     backgroundColor: '#005456',
     flex:1,
-    justifyContent: 'center', 
+    justifyContent: 'center',
     alignItems:'center',
     padding: 10,
   },
@@ -137,7 +158,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width:'90%',
     alignSelf:'center',
-    marginTop:25, 
+    marginTop:25,
     marginBottom:10,
   },
 
@@ -148,8 +169,15 @@ const styles = StyleSheet.create({
     alignSelf:'center',
   },
 
+  userPic:{
+    flex:1,
+    width:'100%',
+    height: '100%',
+    alignSelf:'center',
+  },
+
   photoIcon:{
-    borderWidth:0, 
+    borderWidth:0,
     alignItems:'center',
     justifyContent:'center',
     alignSelf:'center',
