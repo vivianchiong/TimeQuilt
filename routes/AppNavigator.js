@@ -4,9 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
 
 import Login from '../screens/login.js';
 import Home from '../screens/home.js';
@@ -81,7 +79,7 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name='Home'
           component={MainTabNavigator}
-          options={{ title: 'Home' }}
+          options={{ title: 'Home', gestureEnabled: false }}
         />
         <Stack.Screen
           name='CreatePost'

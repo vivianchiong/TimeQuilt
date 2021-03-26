@@ -44,7 +44,7 @@ export default function CreatePost({ navigation}) {  // TODO: how to pass in pic
         <Text style={styles.titleDay}>Monday</Text>
         <Text style={styles.titleDate}>02/07/2021</Text>
         <TouchableOpacity style={styles.imageContainer} onPress={handleMondayPress}>
-          <Image style={styles.image} source={require('../assets/cat.jpg')} />
+          <Image style={styles.image} source={require('../assets/ImagePlaceholder.jpg')} />
         </TouchableOpacity>
         <TextInput
           style={styles.input}
@@ -85,10 +85,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Rosarivo',
   },
+  imageContainer:{
+    width: 420,
+    height: 355,
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: 'contain',
+  },
   image: {
     flex: 1,
     marginBottom: 25,
     resizeMode: 'contain',
+    maxWidth: 330,
+    maxHeight: 350
     
   },
   input: {
@@ -116,11 +125,5 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     fontFamily: 'Rosario',
   },
-  imageContainer:{
-    width: 420,
-    height: 355,
-    justifyContent: "center",
-    alignItems: "center",
-    
-  }
+  
 });

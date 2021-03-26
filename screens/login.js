@@ -22,7 +22,10 @@ const Login = ({navigation}) =>{
     signIn(email, password);
     setEmail('');
     setPassword('');
-    navigation.navigate('Home')
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Home'}],
+    });
   };
 
   const handleSignUpPress = () => {
