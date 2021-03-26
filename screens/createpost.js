@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import {updateDescriptionDB} from '../api/firebaseMethods';
+import {addPicDB, addPicToUser, deletePicDB, openImagePickerAsync} from '../api/firebaseMethods';
 
 export default function CreatePost() {  // TODO: how to pass in picID??
   const [descrip, setDescription] = useState('');
@@ -14,6 +15,22 @@ export default function CreatePost() {  // TODO: how to pass in picID??
     updateDescriptionDB(picID, descrip);
   };
 
+  const [mondayImage, setMondayImage] = useState(null);
+
+  const handleMondayPress = async () => {
+    let result = await openImagePickerAsync();
+
+    if (result.cancelled !== true) {
+      // if user already has an image for that day, delete it from storage and user's pics[] before adding new pic
+      if (mondayImage !== null) {
+        deletePicDB(mondayImage.id);
+      }
+      let picID = await addPicDB(result.uri, 0);
+      setMondayImage({ id: picID, uri: result.uri }); // store away the picked image's db picID and uri
+      // addPicToUser(picID); commenting out for now bc we don't have navigation and currentUser being preserved yet
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => {
       console.log('dismissed keyboard')
@@ -22,7 +39,7 @@ export default function CreatePost() {  // TODO: how to pass in picID??
       <View style={styles.container}>
         <Text style={styles.titleDay}>Monday</Text>
         <Text style={styles.titleDate}>02/07/2021</Text>
-        <Image style={styles.logo} source={require('../assets/cat.jpg')} />
+        <Image style={styles.logo} source={require('../assets/cat.jpg')} onPress={() => handleMondayPress} />
         <TextInput
           style={styles.input}
           placeholder=' Say Something Special...'
@@ -30,7 +47,7 @@ export default function CreatePost() {  // TODO: how to pass in picID??
           numberOfLines={4}
           onChangeText={changeHandler}
         />
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <TouchableOpacity style={styles.button} onPress={handleMondayPress}>
           <Text style={styles.buttontext}>Submit</Text>
         </TouchableOpacity>
       </View>

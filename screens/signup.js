@@ -30,6 +30,7 @@ const SignUp = ({navigation}) => {
     setEmail('');
     setPassword('');
     setConfirmPassword('');
+    navigation.navigate('Home')
   };
 
   return (

@@ -23,6 +23,7 @@ const Login = ({navigation}) =>{
     signIn(email, password);
     setEmail('');
     setPassword('');
+    navigation.navigate('SignUp')
   };
 
   return(

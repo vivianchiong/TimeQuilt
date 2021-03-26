@@ -11,6 +11,8 @@ import LookThru from './screens/lookthru.js';
 import Opening from './screens/opening.js';
 import SignUp from './screens/signup';
 import Album from './screens/album';
+import Navigator from './routes/AppNavigator';
+
 
 export default function App() {
 
@@ -26,13 +28,7 @@ export default function App() {
   })
   if (fontsLoaded) {
     return (
-      //<Login/>
-      //<Home/>
-      //<CreatePost/>
-      //<LookThru/>
-      //<Opening/>
-      //<SignUp/>
-      <Album/>
+      <Navigator/>
     );
   } else {
     return (
