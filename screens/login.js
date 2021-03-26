@@ -15,14 +15,18 @@ const Login = ({navigation}) =>{
     if (!email) {
       Alert.alert('Email field is required.');
     }
-
-    if (!password) {
+    else if (!password) {
       Alert.alert('Password field is required.');
     }
 
     signIn(email, password);
     setEmail('');
     setPassword('');
+    navigation.navigate('Home')
+  };
+
+  const handleSignUpPress = () => {
+    alert('Sign Up Clicked!')
     navigation.navigate('SignUp')
   };
 
@@ -62,7 +66,7 @@ const Login = ({navigation}) =>{
       <FormButton
       buttonTitle="Sign Up"
       //onPress={() => {}}  navigate to signup screen
-      onPress={() => alert('Sign Up Clicked!')}
+      onPress={handleSignUpPress}
       />
 
     <Text style = {{fontSize: 24, color: '#ecf0f1', fontFamily:'Rosarivo'}}>or</Text>

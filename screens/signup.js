@@ -18,11 +18,11 @@ const SignUp = ({navigation}) => {
       Alert.alert('Email field is required', 'Please try again!');
     }
 
-    if (!password) {
+    else if (!password) {
       Alert.alert('Password field is required', 'Please try again!');
     }
 
-    if (password !== confirmPassword) {
+    else if (password !== confirmPassword) {
       Alert.alert('Passwords do not match', 'Please try again!');
     }
 
