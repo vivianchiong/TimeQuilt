@@ -6,50 +6,6 @@ import {useState} from "react";
 import {addPicDB, addPicToUser, deletePicDB, openImagePickerAsync} from '../api/firebaseMethods';
 import { FontAwesome } from "@expo/vector-icons";
 
-const Tab = createMaterialBottomTabNavigator();
-
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      activeColor="#e91e63"
-      barStyle={{ backgroundColor: 'tomato' }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={Feed}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={Notifications}
-        options={{
-          tabBarLabel: 'Updates',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-
-
 const Home = ({navigation})=>{
   const [mondayImage, setMondayImage] = useState(null);
 
@@ -67,6 +23,10 @@ const Home = ({navigation})=>{
     }
   };
 
+  const handleDayPress = () => {
+    navigation.navigate('CreatePost');
+  }
+
   return(
     <View style = {styles.container}>
       <View style={styles.overlayContainer}>
@@ -77,7 +37,7 @@ const Home = ({navigation})=>{
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={handleMondayPress}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
           {
             mondayImage === null
@@ -88,16 +48,16 @@ const Home = ({navigation})=>{
         <Text style={styles.iconBtnTxt}>Monday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
-          <FontAwesome name="camera-retro" size={55} color="#00b4a6"/>
+          <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Tuesday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
-          <FontAwesome name="image" size={55} color="#00b4a6"/>
+          <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Wednesday</Text>
         </TouchableOpacity>
@@ -105,21 +65,21 @@ const Home = ({navigation})=>{
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Thursday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Friday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
@@ -129,7 +89,7 @@ const Home = ({navigation})=>{
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={handleDayPress}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
@@ -220,3 +180,53 @@ const styles = StyleSheet.create({
     fontFamily:'Rosarivo'
   },
 });
+
+
+
+
+
+
+
+
+// const Tab = createMaterialBottomTabNavigator();
+
+// function MyTabs() {
+//   return (
+//     <Tab.Navigator
+//       initialRouteName="Feed"
+//       activeColor="#e91e63"
+//       barStyle={{ backgroundColor: 'tomato' }}
+//     >
+//       <Tab.Screen
+//         name="Feed"
+//         component={Feed}
+//         options={{
+//           tabBarLabel: 'Home',
+//           tabBarIcon: ({ color }) => (
+//             <MaterialCommunityIcons name="home" color={color} size={26} />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="Notifications"
+//         component={Notifications}
+//         options={{
+//           tabBarLabel: 'Updates',
+//           tabBarIcon: ({ color }) => (
+//             <MaterialCommunityIcons name="bell" color={color} size={26} />
+//           ),
+//         }}
+//       />
+//       <Tab.Screen
+//         name="Profile"
+//         component={Profile}
+//         options={{
+//           tabBarLabel: 'Profile',
+//           tabBarIcon: ({ color }) => (
+//             <MaterialCommunityIcons name="account" color={color} size={26} />
+//           ),
+//         }}
+//       />
+//     </Tab.Navigator>
+//   );
+// }
