@@ -31,8 +31,8 @@ export default function App() {
       //<CreatePost/>
       //<LookThru/>
       //<Opening/>
-      //<SignUp/>
-      <Album/>
+      <SignUp/>
+      //<Album/>
     );
   } else {
     return (
