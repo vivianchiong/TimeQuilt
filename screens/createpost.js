@@ -55,7 +55,7 @@ export default function CreatePost({route, navigation}) {
           {
             image === null
             ? <Image style={styles.image} source={require('../assets/ImagePlaceholder.jpg')} />
-            : <Image source={{ uri: image.uri }} style={styles.image}/>
+            : <Image source={{ uri: image.uri }} style={styles.userPic}/>
           }
         </TouchableOpacity>
         <TextInput
@@ -110,7 +110,14 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     resizeMode: 'contain',
     maxWidth: 330,
-    maxHeight: 350 
+    maxHeight: 350
+  },
+  userPic: {
+    flex: 1,
+    marginBottom: 25,
+    resizeMode: 'contain',
+    width: '80%',
+    height: '80%'
   },
   input: {
     backgroundColor: '#ffffff',
@@ -136,6 +143,6 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     fontFamily: 'Rosario',
-  },  
+  },
 });
 

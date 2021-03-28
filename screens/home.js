@@ -14,7 +14,7 @@ const Home = ({navigation})=>{
   const handleDayPress = (dayNum) => {
     let picMoment = moment().startOf('isoweek').add(dayNum, 'days');
     let picDate = (picMoment.month()+1) + '/' + picMoment.date() + '/' + picMoment.year();
-    navigation.navigate('CreatePost', {dayNum: dayNum, picDate: picDate, picMoment: picMoment});
+    navigation.navigate('CreatePost', {dayNum: dayNum, picDate: picDate, picMoment: picMoment.format()});
   }
 
   return(
