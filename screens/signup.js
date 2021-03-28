@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native';
+import { Text, View, TouchableOpacity, Image, StyleSheet, Alert, Keyboard, TouchableWithoutFeedback,} from 'react-native';
 import FormInput from './loginComponents/formInput';
 import FormButton from './loginComponents/FormButton';
 import SocialButton from './loginComponents/socialButton';
@@ -30,10 +30,17 @@ const SignUp = ({navigation}) => {
     setEmail('');
     setPassword('');
     setConfirmPassword('');
-    navigation.navigate('Home')
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Home'}],
+    });
   };
 
   return (
+    <TouchableWithoutFeedback onPress={() => {
+      console.log('dismissed keyboard')
+      Keyboard.dismiss();
+    }}>
     <View style = {styles.container}>
 
       <Text style = {styles.text}>Create an Account</Text>
@@ -96,6 +103,7 @@ const SignUp = ({navigation}) => {
       />
 
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

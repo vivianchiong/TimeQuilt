@@ -4,8 +4,6 @@ import { useFonts } from 'expo-font';
 import * as firebase from 'firebase';
 import apiKeys from './config/keys';
 import Navigator from './routes/AppNavigator';
-import Opening from './screens/opening';
-
 
 export default function App() {
 

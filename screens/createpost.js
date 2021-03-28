@@ -54,7 +54,7 @@ export default function CreatePost({route, navigation}) {
         <TouchableOpacity style={styles.imageContainer} onPress={handlePicPress}>
           {
             image === null
-            ? <Image style={styles.image} source={require('../assets/cat.jpg')} />
+            ? <Image style={styles.image} source={require('../assets/ImagePlaceholder.jpg')} />
             : <Image source={{ uri: image.uri }} style={styles.image}/>
           }
         </TouchableOpacity>
@@ -98,11 +98,19 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontFamily: 'Rosarivo',
   },
+  imageContainer:{
+    width: 420,
+    height: 355,
+    justifyContent: "center",
+    alignItems: "center",
+    resizeMode: 'contain',
+  },
   image: {
     flex: 1,
     marginBottom: 25,
-    width: '80%',
     resizeMode: 'contain',
+    maxWidth: 330,
+    maxHeight: 350 
   },
   input: {
     backgroundColor: '#ffffff',
@@ -128,12 +136,6 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     fontFamily: 'Rosario',
-  },
-  imageContainer:{
-    width: 420,
-    height: 355,
-    justifyContent: "center",
-    alignItems: "center",
-
-  }
+  },  
 });
+
