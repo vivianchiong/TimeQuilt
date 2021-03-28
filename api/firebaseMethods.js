@@ -69,7 +69,7 @@ export async function openImagePickerAsync() {
 export async function updateDescriptionDB(picID, descrip) {
   try {
     const db = firebase.firestore();
-    db.collection("pictures")
+    await db.collection("pictures")
       .doc(picID)
       .update({
         description: descrip
@@ -176,13 +176,14 @@ export async function getUserPics() {
     const currentUser = firebase.auth().currentUser;
     const userRef = db.collection("users").doc(currentUser.uid);
 
-    const pics = await userRef.get().then((doc) => {
+    const pics = userRef.get().then((doc) => {
       if (doc.exists) {
         console.log("User document data:", doc.data());
         return doc.data().pics;
       } else {
         console.log("No such user document!");
       }
+      return pics;
     }).catch((error) => {
       console.log("Error getting user document:", error);
     });
@@ -202,7 +203,7 @@ export async function getPicCreatePost(createPostMoment) {
     pics.forEach(picID => {
 
       const picRef = db.collection("pictures").doc(picID);
-      const picMoment = await picRef.get().then((doc) => {
+      const picMoment = picRef.get().then((doc) => {
         if (doc.exists) {
           console.log("Pic document data:", doc.data());
           return doc.data().moment;
@@ -237,7 +238,7 @@ export async function getHomePicsDB() {
     pics.forEach(picID => {
 
       const picRef = db.collection("pictures").doc(picID);
-      const picMoment = await picRef.get().then((doc) => {
+      const picMoment = picRef.get().then((doc) => {
         if (doc.exists) {
           console.log("Pic document data:", doc.data());
           return doc.data().moment;
