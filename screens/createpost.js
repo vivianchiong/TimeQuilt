@@ -5,7 +5,7 @@ import {updateDescriptionDB} from '../api/firebaseMethods';
 import {addPicDB, addPicToUser, deletePicDB, deleteUserPic, openImagePickerAsync} from '../api/firebaseMethods';
 
 export default function CreatePost({route, navigation}) {
-  const {dayNum, picDate} = route.params;
+  const {dayNum, picDate, picMoment} = route.params;
   const [image, setImage] = useState(null);
   const [descrip, setDescription] = useState('');
   const weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday', 'Sunday'];
