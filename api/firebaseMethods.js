@@ -148,3 +148,21 @@ export async function deletePicDB(picID) {
     Alert.alert(err.message, "Deleting picture from database and storage was unsucessful!");
   }
 }
+
+/*
+ * Deletes a picture from current user's `pics` array in the database.
+ */
+export async function deleteUserPic(picID) {
+  try {
+    const db = firebase.firestore();
+    const currentUser = firebase.auth().currentUser;
+
+    await db.collection("users")
+      .doc(currentUser.uid)
+      .update({
+        pics: firebase.firestore.FieldValue.arrayRemove(picID)
+      });
+  } catch (err) {
+    Alert.alert(err.message, "Deleting picture from user in database was unsuccessful!");
+  }
+}
