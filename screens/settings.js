@@ -5,7 +5,10 @@ import { Octicons } from "@expo/vector-icons";
 const Settings = ({navigation})=>{
   
     const handleSignOutPress = () => {
-      navigation.navigate('Opening');
+      navigation.reset({
+        index: 0,
+        routes: [{name: 'Opening'}],
+      });
     }
   
     return(
@@ -13,7 +16,7 @@ const Settings = ({navigation})=>{
     
         <TouchableOpacity style={styles.signOutButton} onPress={handleSignOutPress}>
             <Text style={styles.signOutTxt}>Sign Out</Text>
-            <Octicons name="sign-out" size={35} color='#C8FFF4'/>
+            <Octicons name="sign-out" size={35} style={{marginTop:'4%'}} color='#C8FFF4'/>
         </TouchableOpacity>
 
       </View>
@@ -32,13 +35,13 @@ export default Settings;
     },
     signOutButton:{
       flexDirection: 'row',
-      marginHorizontal:0,
-      backgroundColor:'#00B3A6',
       justifyContent:'center',
+      alignItems: 'center',
       borderRadius: 30,
       padding: '5%',
       width: '70%',
       height: '12%',
+      backgroundColor:'#00B3A6',
     }, 
     signOutTxt:{
       alignSelf:'center',

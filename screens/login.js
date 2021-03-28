@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import{View, Text, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native';
+import{View, Text, TouchableOpacity, Image, StyleSheet, Alert, Keyboard, TouchableWithoutFeedback,} from 'react-native';
 import FormInput from './loginComponents/formInput';
 import FormButton from './loginComponents/FormButton';
 import SocialButton from './loginComponents/socialButton';
@@ -22,7 +22,10 @@ const Login = ({navigation}) =>{
     signIn(email, password);
     setEmail('');
     setPassword('');
-    navigation.navigate('Home')
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Home'}],
+    });
   };
 
   const handleSignUpPress = () => {
@@ -31,7 +34,12 @@ const Login = ({navigation}) =>{
   };
 
   return(
+    <TouchableWithoutFeedback onPress={() => {
+      console.log('dismissed keyboard')
+      Keyboard.dismiss();
+    }}>
     <View style = {styles.container}>
+      
       <Image
         source={require('../assets/logo1.jpg')}
         style = {styles.logo}
@@ -86,8 +94,9 @@ const Login = ({navigation}) =>{
         backgroundColor="#fab1a0"
         onPress={()=>{}}
       />
-
+      
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 
