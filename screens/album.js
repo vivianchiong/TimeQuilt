@@ -1,5 +1,6 @@
 import React from 'react';
 import {Dimensions, StyleSheet, Image, Text, View, SectionList} from 'react-native';
+import { SectionGrid } from 'react-native-super-grid';
 
 const{width}= Dimensions.get("window");
 
@@ -50,16 +51,14 @@ export default class Album extends React.Component {
     return (
       <View style = {styles.container}>
         <Text style={styles.titlePage}>Album</Text>
-        <SectionList
-          // contentContainerStyle={{flexDirection: 'row',
-          // flexWrap: 'wrap'}}
+        <SectionGrid
+          itemDimension={width*0.4}
           sections={this.state.data}
           keyExtractor={(item, index) => item + index}
           renderItem={({ item }) => <Item item={item}/>}
           renderSectionHeader={({ section: { week } }) => 
             <Text style={styles.titleWeek}>{week}</Text>
           }
-          initialNumToRender={2}
         />
       </View>
     );
