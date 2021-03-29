@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import{View, Text, TouchableOpacity, Image, StyleSheet, Alert} from 'react-native';
+import{View, Text, TouchableOpacity, Image, StyleSheet, Alert, Keyboard, TouchableWithoutFeedback,} from 'react-native';
 import FormInput from './loginComponents/formInput';
 import FormButton from './loginComponents/FormButton';
 import SocialButton from './loginComponents/socialButton';
@@ -15,19 +15,31 @@ const Login = ({navigation}) =>{
     if (!email) {
       Alert.alert('Email field is required.');
     }
-
-    if (!password) {
+    else if (!password) {
       Alert.alert('Password field is required.');
     }
 
     signIn(email, password);
     setEmail('');
     setPassword('');
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Home'}],
+    });
+  };
+
+  const handleSignUpPress = () => {
+    alert('Sign Up Clicked!')
     navigation.navigate('SignUp')
   };
 
   return(
+    <TouchableWithoutFeedback onPress={() => {
+      console.log('dismissed keyboard')
+      Keyboard.dismiss();
+    }}>
     <View style = {styles.container}>
+      
       <Image
         source={require('../assets/logo1.jpg')}
         style = {styles.logo}
@@ -62,7 +74,7 @@ const Login = ({navigation}) =>{
       <FormButton
       buttonTitle="Sign Up"
       //onPress={() => {}}  navigate to signup screen
-      onPress={() => alert('Sign Up Clicked!')}
+      onPress={handleSignUpPress}
       />
 
     <Text style = {{fontSize: 24, color: '#ecf0f1', fontFamily:'Rosarivo'}}>or</Text>
@@ -82,8 +94,9 @@ const Login = ({navigation}) =>{
         backgroundColor="#fab1a0"
         onPress={()=>{}}
       />
-
+      
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

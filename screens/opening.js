@@ -11,6 +11,10 @@ class Opening extends Component {
   };
 
   componentDidMount(){
+    setTimeout(() => {
+      this.props.navigation.replace('Login');
+    }, 2200);
+
     const{LogoAnime, LogoText} = this.state;
     Animated.parallel([
       Animated.spring(LogoAnime, {

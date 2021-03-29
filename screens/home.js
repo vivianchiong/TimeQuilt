@@ -1,143 +1,89 @@
 import React from 'react';
-import { Text, View , Button, StyleSheet, StatusBar, TouchableOpacity, Image} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { Text, View , Button, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {useState} from "react";
-import {addPicDB, addPicToUser, deletePicDB, openImagePickerAsync} from '../api/firebaseMethods';
 import { FontAwesome } from "@expo/vector-icons";
-
-const Tab = createMaterialBottomTabNavigator();
-
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      initialRouteName="Feed"
-      activeColor="#e91e63"
-      barStyle={{ backgroundColor: 'tomato' }}
-    >
-      <Tab.Screen
-        name="Feed"
-        component={Feed}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Notifications"
-        component={Notifications}
-        options={{
-          tabBarLabel: 'Updates',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-
+import moment from 'moment';
 
 const Home = ({navigation})=>{
-  const [mondayImage, setMondayImage] = useState(null);
 
-  const handleMondayPress = async () => {
-    let result = await openImagePickerAsync();
+  let monday = moment().startOf('isoweek');
+  let sunday = moment().startOf('isoweek').add(6, 'days');
+  let mondayDate = (monday.month()+1) + '/' + monday.date() + '/' + monday.year(); // m-d-y format: march 12 2021 => 3/12/2021
+  let sundayDate = (sunday.month()+1) + '/' + sunday.date() + '/' + sunday.year();
 
-    if (result.cancelled !== true) {
-      // if user already has an image for that day, delete it from storage and user's pics[] before adding new pic
-      if (mondayImage !== null) {
-        deletePicDB(mondayImage.id);
-      }
-      let picID = await addPicDB(result.uri, 0);
-      setMondayImage({ id: picID, uri: result.uri }); // store away the picked image's db picID and uri
-      // addPicToUser(picID); commenting out for now bc we don't have navigation and currentUser being preserved yet
-    }
-  };
+  const handleDayPress = (dayNum) => {
+    let picMoment = moment().startOf('isoweek').add(dayNum, 'days');
+    let picDate = (picMoment.month()+1) + '/' + picMoment.date() + '/' + picMoment.year();
+    navigation.navigate('CreatePost', {dayNum: dayNum, picDate: picDate});
+  }
 
   return(
     <View style = {styles.container}>
       <View style={styles.overlayContainer}>
         <View style = {styles.top}>
           <Text style={styles.header}>Current Week</Text>
-          <Text style={styles.date}>2/08/2021-2/14/2021</Text>
+          <Text style={styles.date}>{mondayDate}-{sundayDate}</Text>
         </View>
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={handleMondayPress}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(0)}>
         <View style={styles.photoIcon}>
-          {
+          {/* {
             mondayImage === null
             ? <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
             : <Image source={{ uri: mondayImage.uri } } style={styles.userPic}/>
-          }
+          } */<FontAwesome name="plus-circle" size={75} color="#00b4a6"/>}
         </View>
         <Text style={styles.iconBtnTxt}>Monday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(1)}>
         <View style={styles.photoIcon}>
-          <FontAwesome name="camera-retro" size={55} color="#00b4a6"/>
+          <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Tuesday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(2)}>
         <View style={styles.photoIcon}>
-          <FontAwesome name="image" size={55} color="#00b4a6"/>
+          <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Wednesday</Text>
         </TouchableOpacity>
-
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(3)}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Thursday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(4)}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Friday</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(5)}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Saturday</Text>
         </TouchableOpacity>
-
       </View>
 
       <View style = {styles.photoContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={()=>{}}>
+        <TouchableOpacity style={styles.iconButton} onPress={() => handleDayPress(6)}>
         <View style={styles.photoIcon}>
           <FontAwesome name="plus-circle" size={75} color="#00b4a6"/>
         </View>
         <Text style={styles.iconBtnTxt}>Sunday</Text>
         </TouchableOpacity>
-
       </View>
-
 
     </View>
   );
@@ -166,13 +112,6 @@ const styles = StyleSheet.create({
     flex:1,
     width:'30%',
     marginHorizontal:0,
-    alignSelf:'center',
-  },
-
-  userPic:{
-    flex:1,
-    width:'100%',
-    height: '100%',
     alignSelf:'center',
   },
 
