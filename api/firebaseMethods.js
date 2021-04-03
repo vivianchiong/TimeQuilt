@@ -174,21 +174,24 @@ export async function getUserPics() {
   try {
     const db = firebase.firestore();
     const currentUser = firebase.auth().currentUser;
-    const userRef = db.collection("users").doc(currentUser.uid);
 
-    const result = userRef.get().then((doc) => {
-      if (doc.exists) {
-        // console.log("User document data:", doc.data());
-        return doc.get('pics');
-      } else {
-        console.log("No such user document!");
-        return null;
-      }
-    }).catch((error) => {
-      console.log("Error getting user document:", error);
-    });
-    return result;
-  } catch {
+    if (currentUser !== null) {
+      const userRef = db.collection("users").doc(currentUser.uid);
+      const result = userRef.get().then((doc) => {
+        if (doc.exists) {
+          // console.log("User document data:", doc.data());
+          return doc.get('pics');
+        } else {
+          console.log("No such user document!");
+          return null;
+        }
+      }).catch((error) => {
+        console.log("Error getting user document:", error);
+      });
+      return result;
+    }
+
+  } catch (err) {
     Alert.alert(err.message, "Getting current user's pics in the database was unsucessful!");
   }
 }
@@ -235,38 +238,59 @@ export async function getPicCreatePost(createPostMoment) {
 }
 
 /*
+ * Get pic's data for home.
+ */
+export async function getHomePicData(picID) {
+  try {
+    const db = firebase.firestore();
+    let picRef = db.collection("pictures").doc(picID);
+    let picResult = picRef.get().then((doc) => {
+
+      if (doc.exists) {
+        return {uri: doc.get('uri'), moment: doc.get('moment')};
+      } else {
+        console.log("No such pic document!");
+        return null;
+      }
+
+    }).then((picData) => {
+
+      if (picData !== null) {
+        let input = moment(picData.moment);
+
+        if (moment().isoWeek() === input.isoWeek()) {
+          let picDayNum = input.isoWeekday() - 1;
+          return {day: picDayNum, id: picID, uri: picData.uri};
+        }
+      }
+
+      return null;
+    }).catch((error) => {
+        console.log("Error getting pic document:", error);
+    });
+
+    return picResult;
+  } catch (err) {
+    Alert.alert(err.message, "Getting pic data was unsuccessful!");
+  }
+}
+
+/*
  * Get current user's pics for the current week in the database.
  */
 export async function getHomePicsDB() {
   try {
-    const db = firebase.firestore();
-    const pics = await getUserPics();
+    var homePics = {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}; // Monday - Sunday
+    let pics = await getUserPics();
 
-    let picsDict = {0: '', 1: '', 2: '', 3: '', 4: '', 5: '', 6: ''}; // Monday - Sunday
-
-    pics.forEach(picID => {
-
-      const picRef = db.collection("pictures").doc(picID);
-      const picMoment = picRef.get().then((doc) => {
-        if (doc.exists) {
-          console.log("Pic document data:", doc.data());
-          return doc.data().moment;
-        } else {
-          console.log("No such pic document!");
-        }
-      }).catch((error) => {
-          console.log("Error getting pic document:", error);
-      });
-
-      if (moment().isoWeek() === picMoment.isoWeek()) {
-        let picDayNum = picMoment.isoWeekday() - 1;
-        picsDict[picDayNum] = picID;
+    for (const picID of pics) {
+      let picResult = await getHomePicData(picID);
+      if (picResult !== null) {
+        homePics[picResult.day] = {id: picID, uri: picResult.uri};
       }
+    }
 
-    })
-
-    return picsDict;
-
+    return homePics;
   } catch (err) {
     Alert.alert(err.message, "Geting current user's pics for the week in the database was unsucessful!");
   }

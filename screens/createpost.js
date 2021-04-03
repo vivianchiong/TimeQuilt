@@ -17,10 +17,13 @@ export default function CreatePost({route, navigation}) {
       if ((result !== undefined) && (result.id !== null) && (result.uri !== null) && (result.description !== null)) {
         setImage({ id: result.id, uri: result.uri });
         setDescription(result.description);
+        console.log("in createpost/getPic");
       }
     };
     getPic();
-  }, []);
+  }, []); // put navigation?-> this doesn't work.. i also tried using navigation.addListener('focus') but
+          // since these create posts screens of monday, tuesday, etc. are technically the same screen,
+          // the screen is always focused and useEffect still doesn't get called I think
 
   const changeHandler = (val) => {
     setDescription(val);
@@ -155,4 +158,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Rosario',
   },
 });
-
