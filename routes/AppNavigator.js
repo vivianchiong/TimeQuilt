@@ -14,6 +14,7 @@ import Opening from '../screens/opening.js';
 import SignUp from '../screens/signup';
 import Album from '../screens/album';
 import Settings from '../screens/settings'
+import Calendarr from '../screens/calendar'
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
@@ -91,7 +92,16 @@ export default function MainStackNavigator() {
           component={LookThru}
           options={{ title: 'LookThru' }}
         />
-        
+        <Stack.Screen
+          name='Album' 
+          component={Album}
+          options={{ title: 'Album' }}
+        />
+        <Stack.Screen
+          name='Calendarr' 
+          component={Calendarr}
+          options={{ title: 'Calendarr' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     )
