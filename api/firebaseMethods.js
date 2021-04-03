@@ -176,19 +176,20 @@ export async function getUserPics() {
     const currentUser = firebase.auth().currentUser;
     const userRef = db.collection("users").doc(currentUser.uid);
 
-    const pics = userRef.get().then((doc) => {
+    const result = userRef.get().then((doc) => {
       if (doc.exists) {
-        console.log("User document data:", doc.data());
-        return doc.data().pics;
+        // console.log("User document data:", doc.data());
+        return doc.get('pics');
       } else {
         console.log("No such user document!");
+        return null;
       }
-      return pics;
     }).catch((error) => {
       console.log("Error getting user document:", error);
     });
+    return result;
   } catch {
-    Alert.alert(err.message, "Getting current user's pic for this day in the database was unsucessful!");
+    Alert.alert(err.message, "Getting current user's pics in the database was unsucessful!");
   }
 }
 
@@ -198,28 +199,36 @@ export async function getUserPics() {
 export async function getPicCreatePost(createPostMoment) {
   try {
     const db = firebase.firestore();
-    const pics = await getUserPics();
+    let pics = await getUserPics();
+    var result = { id: null, uri: null, description: null };
 
-    pics.forEach(picID => {
+    if (pics.length !== 0) {
+      pics.forEach((picID) => {
 
-      const picRef = db.collection("pictures").doc(picID);
-      const picMoment = picRef.get().then((doc) => {
-        if (doc.exists) {
-          console.log("Pic document data:", doc.data());
-          return doc.data().moment;
-        } else {
-          console.log("No such pic document!");
+        let picRef = db.collection("pictures").doc(picID);
+        let picResult = picRef.get().then((doc) => {
+
+          if (doc.exists) {
+            // console.log("Pic document data:", doc.data());
+
+            if (createPostMoment === doc.get('moment')) {
+              return { id: picID, uri: doc.get('uri'), description: doc.get('description') };
+            }
+          } else {
+            console.log("No such pic document!");
+          }
+
+        }).catch((error) => {
+            console.log("Error getting pic document:", error);
+        });
+
+        if (picResult !== undefined) {
+          result = picResult;
         }
-      }).catch((error) => {
-          console.log("Error getting pic document:", error);
       });
+    }
 
-      if (createPostMoment === picMoment) {
-        return picID;
-      }
-
-    })
-
+    return result; // no pic for the create post page, or couldn't find one
   } catch (err) {
     Alert.alert(err.message, "Getting current user's pic for create post page's day in the database was unsucessful!");
   }

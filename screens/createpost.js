@@ -1,8 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {updateDescriptionDB} from '../api/firebaseMethods';
-import {addPicDB, addPicToUser, deletePicDB, deleteUserPic, openImagePickerAsync} from '../api/firebaseMethods';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {updateDescriptionDB, getPicCreatePost, addPicDB, addPicToUser, deletePicDB, deleteUserPic, openImagePickerAsync} from '../api/firebaseMethods';
 
 export default function CreatePost({route, navigation}) {
   const {dayNum, picDate, picMoment} = route.params;
@@ -10,6 +9,18 @@ export default function CreatePost({route, navigation}) {
   const [descrip, setDescription] = useState('');
   const weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday', 'Sunday'];
   const picDay = weekdays[dayNum];
+
+  // get request for user's pic associated with this day (if it exists) on page render
+  useEffect(() => {
+    const getPic = async () => {
+      const result = await getPicCreatePost(picMoment); // { id: null, uri: null, description: null };
+      if ((result !== undefined) && (result.id !== null) && (result.uri !== null) && (result.description !== null)) {
+        setImage({ id: result.id, uri: result.uri });
+        setDescription(result.description);
+      }
+    };
+    getPic();
+  }, []);
 
   const changeHandler = (val) => {
     setDescription(val);
@@ -45,7 +56,6 @@ export default function CreatePost({route, navigation}) {
   return (
     <KeyboardAwareScrollView style={{flex:1, backgroundColor:"#005457"}} enableOnAndroid={true} viewIsInsideTabBar={true}>
     <TouchableWithoutFeedback onPress={() => {
-      console.log('dismissed keyboard')
       Keyboard.dismiss();
     }}>
       <View style={styles.container}>
