@@ -69,7 +69,7 @@ export async function openImagePickerAsync() {
 export async function updateDescriptionDB(picID, descrip) {
   try {
     const db = firebase.firestore();
-    db.collection("pictures")
+    await db.collection("pictures")
       .doc(picID)
       .update({
         description: descrip
@@ -164,5 +164,134 @@ export async function deleteUserPic(picID) {
       });
   } catch (err) {
     Alert.alert(err.message, "Deleting picture from user in database was unsuccessful!");
+  }
+}
+
+/*
+ * Get current user's pics in the database.
+ */
+export async function getUserPics() {
+  try {
+    const db = firebase.firestore();
+    const currentUser = firebase.auth().currentUser;
+
+    if (currentUser !== null) {
+      const userRef = db.collection("users").doc(currentUser.uid);
+      const result = userRef.get().then((doc) => {
+        if (doc.exists) {
+          // console.log("User document data:", doc.data());
+          return doc.get('pics');
+        } else {
+          console.log("No such user document!");
+          return null;
+        }
+      }).catch((error) => {
+        console.log("Error getting user document:", error);
+      });
+      return result;
+    }
+
+  } catch (err) {
+    Alert.alert(err.message, "Getting current user's pics in the database was unsucessful!");
+  }
+}
+
+/*
+ * Get current user's pic for create post page's day in the database.
+ */
+export async function getPicCreatePost(createPostMoment) {
+  try {
+    const db = firebase.firestore();
+    let pics = await getUserPics();
+    var result = { id: null, uri: null, description: null };
+
+    if (pics.length !== 0) {
+      pics.forEach((picID) => {
+
+        let picRef = db.collection("pictures").doc(picID);
+        let picResult = picRef.get().then((doc) => {
+
+          if (doc.exists) {
+            // console.log("Pic document data:", doc.data());
+
+            if (createPostMoment === doc.get('moment')) {
+              return { id: picID, uri: doc.get('uri'), description: doc.get('description') };
+            }
+          } else {
+            console.log("No such pic document!");
+          }
+
+        }).catch((error) => {
+            console.log("Error getting pic document:", error);
+        });
+
+        if (picResult !== undefined) {
+          result = picResult;
+        }
+      });
+    }
+
+    return result; // no pic for the create post page, or couldn't find one
+  } catch (err) {
+    Alert.alert(err.message, "Getting current user's pic for create post page's day in the database was unsucessful!");
+  }
+}
+
+/*
+ * Get pic's data for home.
+ */
+export async function getHomePicData(picID) {
+  try {
+    const db = firebase.firestore();
+    let picRef = db.collection("pictures").doc(picID);
+    let picResult = picRef.get().then((doc) => {
+
+      if (doc.exists) {
+        return {uri: doc.get('uri'), moment: doc.get('moment')};
+      } else {
+        console.log("No such pic document!");
+        return null;
+      }
+
+    }).then((picData) => {
+
+      if (picData !== null) {
+        let input = moment(picData.moment);
+
+        if (moment().isoWeek() === input.isoWeek()) {
+          let picDayNum = input.isoWeekday() - 1;
+          return {day: picDayNum, id: picID, uri: picData.uri};
+        }
+      }
+
+      return null;
+    }).catch((error) => {
+        console.log("Error getting pic document:", error);
+    });
+
+    return picResult;
+  } catch (err) {
+    Alert.alert(err.message, "Getting pic data was unsuccessful!");
+  }
+}
+
+/*
+ * Get current user's pics for the current week in the database.
+ */
+export async function getHomePicsDB() {
+  try {
+    var homePics = {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}; // Monday - Sunday
+    let pics = await getUserPics();
+
+    for (const picID of pics) {
+      let picResult = await getHomePicData(picID);
+      if (picResult !== null) {
+        homePics[picResult.day] = {id: picID, uri: picResult.uri};
+      }
+    }
+
+    return homePics;
+  } catch (err) {
+    Alert.alert(err.message, "Geting current user's pics for the week in the database was unsucessful!");
   }
 }

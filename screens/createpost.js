@@ -1,15 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Text, View, Image, StyleSheet, TouchableOpacity, TextInput, TouchableWithoutFeedback, Keyboard} from 'react-native';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import {updateDescriptionDB} from '../api/firebaseMethods';
-import {addPicDB, addPicToUser, deletePicDB, deleteUserPic, openImagePickerAsync} from '../api/firebaseMethods';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
+import {updateDescriptionDB, getPicCreatePost, addPicDB, addPicToUser, deletePicDB, deleteUserPic, openImagePickerAsync} from '../api/firebaseMethods';
 
 export default function CreatePost({route, navigation}) {
-  const {dayNum, picDate} = route.params;
+  const {dayNum, picDate, picMoment} = route.params;
   const [image, setImage] = useState(null);
   const [descrip, setDescription] = useState('');
   const weekdays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday', 'Sunday'];
   const picDay = weekdays[dayNum];
+
+  // get request for user's pic associated with this day (if it exists) on page render
+  useEffect(() => {
+    const getPic = async () => {
+      const result = await getPicCreatePost(picMoment); // { id: null, uri: null, description: null };
+      if ((result !== undefined) && (result.id !== null) && (result.uri !== null) && (result.description !== null)) {
+        setImage({ id: result.id, uri: result.uri });
+        setDescription(result.description);
+        console.log("in createpost/getPic");
+      }
+    };
+    getPic();
+  }, []); // put navigation?-> this doesn't work.. i also tried using navigation.addListener('focus') but
+          // since these create posts screens of monday, tuesday, etc. are technically the same screen,
+          // the screen is always focused and useEffect still doesn't get called I think
 
   const changeHandler = (val) => {
     setDescription(val);
@@ -45,7 +59,6 @@ export default function CreatePost({route, navigation}) {
   return (
     <KeyboardAwareScrollView style={{flex:1, backgroundColor:"#005457"}} enableOnAndroid={true} viewIsInsideTabBar={true}>
     <TouchableWithoutFeedback onPress={() => {
-      console.log('dismissed keyboard')
       Keyboard.dismiss();
     }}>
       <View style={styles.container}>
@@ -55,7 +68,7 @@ export default function CreatePost({route, navigation}) {
           {
             image === null
             ? <Image style={styles.image} source={require('../assets/ImagePlaceholder.jpg')} />
-            : <Image source={{ uri: image.uri }} style={styles.image}/>
+            : <Image source={{ uri: image.uri }} style={styles.userPic}/>
           }
         </TouchableOpacity>
         <TextInput
@@ -110,7 +123,14 @@ const styles = StyleSheet.create({
     marginBottom: 25,
     resizeMode: 'contain',
     maxWidth: 330,
-    maxHeight: 350 
+    maxHeight: 350
+  },
+  userPic: {
+    flex: 1,
+    marginBottom: 25,
+    resizeMode: 'contain',
+    width: '80%',
+    height: '80%'
   },
   input: {
     backgroundColor: '#ffffff',
@@ -136,6 +156,5 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center',
     fontFamily: 'Rosario',
-  },  
+  },
 });
-
