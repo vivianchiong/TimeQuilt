@@ -30,7 +30,6 @@ export default function CreatePost({route, navigation}) {
   }
 
   const handleSubmitPress = () => {
-    alert('Submit Clicked!');
     if (image === null) {
       alert('Submit a image before updating the description!');
       return;
