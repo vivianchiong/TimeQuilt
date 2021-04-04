@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 
-import { FontAwesome, FontAwesome5, MaterialIcons } from "@expo/vector-icons";
+import { FontAwesome, FontAwesome5, MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 import Login from '../screens/login.js';
 import Home from '../screens/home.js';
@@ -100,7 +100,24 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name='Calendarr' 
           component={Calendarr}
-          options={{ title: 'Calendarr' }}
+          options={{ 
+            title: 'Back',
+            headerBackImage: () => <Ionicons name={'chevron-back'} size={30} color={'#C8FFF4'} />,
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontFamily: 'Rosarivo',
+              fontSize: 23,
+              marginLeft: '-10%',
+            },
+            headerShown: true,
+            headerTintColor: '#C8FFF4',
+            headerStyle: {
+              backgroundColor: '#00B3A6',
+              elevation: 0,
+              shadowOpacity: 0,
+              height: 85,
+            },
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
