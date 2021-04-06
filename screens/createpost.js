@@ -35,7 +35,10 @@ export default function CreatePost({route, navigation}) {
       return;
     }
     updateDescriptionDB(image.id, descrip);
-    navigation.pop();
+    navigation.reset({
+      index: 0,
+      routes: [{name: 'Home'}],
+    });
   };
 
   const handlePicPress = async () => {

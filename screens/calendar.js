@@ -9,7 +9,6 @@ export default function Calendarr({ navigation }) {
     const markedDate = Object.assign({});
 
     const setNewSelected = day => {
-        let less = 2;
         if (Object.keys(markedDates).length < 2) {
 
             if (Object.keys(markedDates).length == 1) {
@@ -18,7 +17,6 @@ export default function Calendarr({ navigation }) {
                     if (parseInt(x.substring(0,4), 10) != day.year){
                         // if first date year is less than next date year
                         if (parseInt(x.substring(0,4), 10) < day.year) {
-                            less = 1
                             markedDate[x] = {
                                 startingDay: true, 
                                 color: '#A4C6A2', 
@@ -88,7 +86,6 @@ export default function Calendarr({ navigation }) {
                         }
                         // second year is less than first year
                         else {
-                            less = 0
                             markedDate[x] = {
                                 endingDay: true,
                                 color: '#A4C6A2', 
@@ -160,7 +157,6 @@ export default function Calendarr({ navigation }) {
                     else if (parseInt(x.substring(5,7), 10) != day.month){
                         // first month is less than 2nd
                         if (parseInt(x.substring(5,7), 10) < day.month) {
-                            less = 1
                             markedDate[x] = {
                                 startingDay: true, 
                                 color: '#A4C6A2', 
@@ -216,7 +212,6 @@ export default function Calendarr({ navigation }) {
                         }
                         // 2nd month is less than first
                         else {
-                            less = 0
                             markedDate[x] = {
                                 endingDay: true,
                                 color: '#A4C6A2', 
@@ -275,7 +270,6 @@ export default function Calendarr({ navigation }) {
                     else if (parseInt(x.substring(8), 10) != day.day) {
                         // initial day is less 
                         if (parseInt(x.substring(8), 10) < day.day) {
-                            less = 1
                             markedDate[x] = {
                                 startingDay: true, 
                                 color: '#A4C6A2', 
@@ -300,7 +294,6 @@ export default function Calendarr({ navigation }) {
                         }
                         else {
                             // initial day is more
-                            less = 0
                             markedDate[x] = {
                                 endingDay: true,
                                 color: '#A4C6A2', 
