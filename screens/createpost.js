@@ -12,8 +12,14 @@ export default function CreatePost({route, navigation}) {
 
   // get request for user's pic associated with this day (if it exists) on page render
   useEffect(() => {
+    console.log("__________________________")
+    console.log(picMoment)
+    console.log("__________________________")
     const getPic = async () => {
+      // There might be something wrong with the getPicCreatePost Function, returns undefined for everything but the most recently uploaded picture 
+      // The functionality should be very simialr to the getHomePics
       const result = await getPicCreatePost(picMoment); // { id: null, uri: null, description: null };
+      console.log(result)
       if ((result !== undefined) && (result.id !== null) && (result.uri !== null) && (result.description !== null)) {
         setImage({ id: result.id, uri: result.uri });
         setDescription(result.description);
@@ -31,10 +37,12 @@ export default function CreatePost({route, navigation}) {
 
   const handleSubmitPress = () => {
     if (image === null) {
-      alert('Submit a image before updating the description!');
+      alert('Submit an image before updating the description!');
       return;
     }
+    // are updating the description and storing the picture 2 different functions?
     updateDescriptionDB(image.id, descrip);
+    
     navigation.reset({
       index: 0,
       routes: [{name: 'Home'}],
@@ -52,6 +60,7 @@ export default function CreatePost({route, navigation}) {
         setDescription('');
         setImage(null);
       }
+
       let picID = await addPicDB(result.uri, dayNum);
       setImage({ id: picID, uri: result.uri }); // store away the picked image's db picID and uri
       await addPicToUser(picID);
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Rosarivo',
   },
   titleDate: {
-    marginBottom: 50,
+    marginBottom: 30,
     color: '#ffffff',
     fontStyle: 'normal',
     fontWeight: 'normal',
