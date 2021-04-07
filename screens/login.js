@@ -35,11 +35,10 @@ const Login = ({navigation}) =>{
 
   return(
     <TouchableWithoutFeedback onPress={() => {
-      console.log('dismissed keyboard')
       Keyboard.dismiss();
     }}>
     <View style = {styles.container}>
-      
+
       <Image
         source={require('../assets/logo1.jpg')}
         style = {styles.logo}
@@ -73,7 +72,6 @@ const Login = ({navigation}) =>{
 
       <FormButton
       buttonTitle="Sign Up"
-      //onPress={() => {}}  navigate to signup screen
       onPress={handleSignUpPress}
       />
 
@@ -94,7 +92,7 @@ const Login = ({navigation}) =>{
         backgroundColor="#fab1a0"
         onPress={()=>{}}
       />
-      
+
     </View>
     </TouchableWithoutFeedback>
   );

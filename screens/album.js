@@ -1,5 +1,6 @@
 import React from 'react';
-import {Dimensions, StyleSheet, Image, Text, View, SectionList} from 'react-native';
+import {Dimensions, StyleSheet, Image, Text, View, TouchableOpacity} from 'react-native';
+import { FontAwesome } from '@expo/vector-icons';
 import { SectionGrid } from 'react-native-super-grid';
 
 const{width}= Dimensions.get("window");
@@ -47,10 +48,21 @@ export default class Album extends React.Component {
     }
   }
 
+
+  navCalendar = () => {
+    this.props.navigation.navigate('Calendarr');
+  }
+
   render(){
     return (
       <View style = {styles.container}>
         <Text style={styles.titlePage}>Album</Text>
+
+        <TouchableOpacity style={styles.searchSection} onPress={this.navCalendar}>
+          <Text style={styles.text}>Calendar Search</Text>
+          <FontAwesome name="calendar" size={18} style={styles.searchIcon} />
+        </TouchableOpacity>
+
         <SectionGrid
           itemDimension={width*0.4}
           sections={this.state.data}
@@ -64,6 +76,7 @@ export default class Album extends React.Component {
     );
   }
 }
+
 const styles = StyleSheet.create({
   container:{
     flex: 1,
@@ -93,5 +106,28 @@ const styles = StyleSheet.create({
     width: width*0.4, 
     height: width*0.4,
     alignSelf: 'center',
+  },
+  searchSection: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: "white",
+    width: '95%',
+    height: 52,
+    marginTop: '4%',
+    borderWidth: 3,
+    borderColor: '#005457'
+  },
+  searchIcon: {
+    padding: 10,
+    paddingLeft: 10,
+    color: '#005457'
+  },
+  text: {
+    color: '#005457',
+    fontFamily: 'Rosarivo',
+    fontWeight: 'bold',
+    fontSize: 17
   },
 });
