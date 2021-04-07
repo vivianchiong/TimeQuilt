@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
   },
 
   header:{
-    bottom:45,
+    bottom:15,
     color:'#fff',
     fontSize:34,
     padding: 60,
@@ -214,10 +214,11 @@ const styles = StyleSheet.create({
   },
 
   date:{
+    marginTop:20,
     bottom:80,
     color:'#fff',
     fontSize:34,
-    padding: 40,
+    padding: 45,
     paddingLeft: 10,
     paddingRight: 10,
     fontFamily:'Rosarivo'
