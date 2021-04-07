@@ -7,8 +7,7 @@ const{width}= Dimensions.get("window");
 
 function Item({ item }) {
   return (
-    <View style={{flexDirection: 'row',
-    flexWrap: 'wrap'}}>
+    <View>
       <Image source={{uri:item}}  style={styles.image} />
     </View>
   );
