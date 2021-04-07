@@ -85,7 +85,21 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name='CreatePost'
           component={CreatePost}
-          options={{ title: 'CreatePost' }}
+          options={{ title: 'Back',
+                    headerBackImage: () => <Ionicons name={'chevron-back'} size={30} color={'#C8FFF4'} style={{marginTop: 3}} />,
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                      fontFamily: 'Rosarivo',
+                      fontSize: 23,
+                      marginLeft: '-10%',
+                    },
+                    headerShown: true,
+                    headerTintColor: '#C8FFF4',
+                    headerStyle: {
+                      backgroundColor: '#00B3A6',
+                      height: 70,
+                    },
+        }}
         />
         <Stack.Screen
           name='LookThru' 
@@ -102,7 +116,7 @@ export default function MainStackNavigator() {
           component={Calendarr}
           options={{ 
             title: 'Back',
-            headerBackImage: () => <Ionicons name={'chevron-back'} size={30} color={'#C8FFF4'} />,
+            headerBackImage: () => <Ionicons name={'chevron-back'} size={30} color={'#C8FFF4'} style={{marginTop: 3}}/>,
             headerTitleStyle: {
               fontWeight: 'bold',
               fontFamily: 'Rosarivo',
@@ -113,8 +127,6 @@ export default function MainStackNavigator() {
             headerTintColor: '#C8FFF4',
             headerStyle: {
               backgroundColor: '#00B3A6',
-              elevation: 0,
-              shadowOpacity: 0,
               height: 85,
             },
           }}

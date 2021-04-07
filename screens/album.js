@@ -32,7 +32,7 @@ export default class Album extends React.Component {
           ]
 
         },
-        {
+        {                                                     
           week: '03/08/2021 - 03/14/2021',
           data: [
             'https://images.unsplash.com/photo-1562285061-26601e60f0f3?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxjb2xsZWN0aW9uLXBhZ2V8MXwxMTQ4ODQ1Nnx8ZW58MHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=60',
@@ -122,12 +122,14 @@ const styles = StyleSheet.create({
   searchIcon: {
     padding: 10,
     paddingLeft: 10,
-    color: '#005457'
+    color: '#005457',
   },
   text: {
+    alignSelf:'center',
     color: '#005457',
     fontFamily: 'Rosarivo',
     fontWeight: 'bold',
-    fontSize: 17
+    fontSize: 17,
+    marginLeft: '4%'
   },
 });

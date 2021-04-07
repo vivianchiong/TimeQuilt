@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image, Alert} from 'react-native';
 import {FontAwesome} from "@expo/vector-icons";
 import moment from 'moment';
 import {getHomePicsDB} from '../api/firebaseMethods';
@@ -48,8 +48,8 @@ const Home = ({navigation})=>{
       });
     };
     getPics();
-  }, []); // what to put in dependency list so that useEffect gets called everytime we go to Home ?????
-
+  }, []); // what to put in dependency list so that useEffect gets called everytime we go to Home ????? 
+  
   return(
     <View style = {styles.container}>
       <View style={styles.overlayContainer}>

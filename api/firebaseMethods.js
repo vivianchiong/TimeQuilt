@@ -207,12 +207,11 @@ export async function getPicCreatePost(createPostMoment) {
 
     if (pics.length !== 0) {
       pics.forEach((picID) => {
-
         let picRef = db.collection("pictures").doc(picID);
         let picResult = picRef.get().then((doc) => {
 
           if (doc.exists) {
-            // console.log("Pic document data:", doc.data());
+            console.log("Pic document data:", doc.data());
 
             if (createPostMoment === doc.get('moment')) {
               return { id: picID, uri: doc.get('uri'), description: doc.get('description') };
@@ -230,7 +229,6 @@ export async function getPicCreatePost(createPostMoment) {
         }
       });
     }
-
     return result; // no pic for the create post page, or couldn't find one
   } catch (err) {
     Alert.alert(err.message, "Getting current user's pic for create post page's day in the database was unsucessful!");
@@ -281,9 +279,11 @@ export async function getHomePicData(picID) {
 export async function getHomePicsDB() {
   try {
     var homePics = {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}; // Monday - Sunday
+    // returns pic IDs
     let pics = await getUserPics();
-
+    
     for (const picID of pics) {
+      // returns picture given picID
       let picResult = await getHomePicData(picID);
       if (picResult !== null) {
         homePics[picResult.day] = {id: picID, uri: picResult.uri};
