@@ -197,38 +197,60 @@ export async function getUserPics() {
 }
 
 /*
+ * Get pic's data for create post if the moment matches.
+ */
+export async function getCreatePicData(picID, createPostMoment) {
+  try {
+    const db = firebase.firestore();
+    let picRef = db.collection("pictures").doc(picID);
+    let picResult = picRef.get().then((doc) => {
+
+      if (doc.exists) {
+        return {uri: doc.get('uri'), moment: doc.get('moment'), description: doc.get('description')};
+      } else {
+        console.log("No such pic document!");
+        return null;
+      }
+
+    }).then((picData) => {
+
+      if (picData !== null) {
+        if (createPostMoment == picData.moment) {
+          return { uri: picData.uri, description: picData.description };
+        }
+      }
+
+      return null;
+    }).catch((error) => {
+        console.log("Error getting pic document:", error);
+    });
+
+    return picResult;
+  } catch (err) {
+    Alert.alert(err.message, "Getting create pic data was unsuccessful!");
+  }
+}
+
+/*
  * Get current user's pic for create post page's day in the database.
  */
 export async function getPicCreatePost(createPostMoment) {
   try {
-    const db = firebase.firestore();
     let pics = await getUserPics();
     var result = { id: null, uri: null, description: null };
 
-    if (pics.length !== 0) {
-      pics.forEach((picID) => {
-        let picRef = db.collection("pictures").doc(picID);
-        let picResult = picRef.get().then((doc) => {
+    for (const picID of pics) {
+      // returns picture given picID if the moment matches
+      let picResult = await getCreatePicData(picID, createPostMoment)
 
-          if (doc.exists) {
-            console.log("Pic document data:", doc.data());
-
-            if (createPostMoment === doc.get('moment')) {
-              return { id: picID, uri: doc.get('uri'), description: doc.get('description') };
-            }
-          } else {
-            console.log("No such pic document!");
-          }
-
-        }).catch((error) => {
-            console.log("Error getting pic document:", error);
-        });
-
-        if (picResult !== undefined) {
-          result = picResult;
-        }
-      });
+      if (picResult !== null) {
+        result.id = picID;
+        result.uri = picResult.uri;
+        result.description = picResult.description;
+        return result;
+      }
     }
+
     return result; // no pic for the create post page, or couldn't find one
   } catch (err) {
     Alert.alert(err.message, "Getting current user's pic for create post page's day in the database was unsucessful!");
@@ -269,7 +291,7 @@ export async function getHomePicData(picID) {
 
     return picResult;
   } catch (err) {
-    Alert.alert(err.message, "Getting pic data was unsuccessful!");
+    Alert.alert(err.message, "Getting home pic data was unsuccessful!");
   }
 }
 
@@ -281,7 +303,7 @@ export async function getHomePicsDB() {
     var homePics = {"0": null, "1": null, "2": null, "3": null, "4": null, "5": null, "6": null}; // Monday - Sunday
     // returns pic IDs
     let pics = await getUserPics();
-    
+
     for (const picID of pics) {
       // returns picture given picID
       let picResult = await getHomePicData(picID);
