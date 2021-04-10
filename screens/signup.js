@@ -104,9 +104,9 @@ const SignUp = ({navigation}) => {
 
 <View style = {styles.textPrivate}>
         
-          <TouchableOpacity onPress={()=> alert('Return to Login')}>
+          {/* <TouchableOpacity onPress={()=> alert('Return to Login')}>
           <Text style = {styles.color_textPrivate}>Have an account? Return to Login!</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
       </View>
     </View>
     </TouchableWithoutFeedback>
