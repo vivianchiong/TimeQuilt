@@ -13,8 +13,8 @@ import LookThru from '../screens/lookthru.js';
 import Opening from '../screens/opening.js';
 import SignUp from '../screens/signup';
 import Album from '../screens/album';
-import Settings from '../screens/settings'
-import Calendarr from '../screens/calendar'
+import Settings from '../screens/settings';
+import Calendarr from '../screens/calendar';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator()
@@ -75,7 +75,21 @@ export default function MainStackNavigator() {
         <Stack.Screen
           name='SignUp'
           component={SignUp}
-          options={{ title: 'SignUp' }}
+          options={{ title: 'Back',
+                    headerBackImage: () => <Ionicons name={'chevron-back'} size={30} color={'#C8FFF4'} style={{marginTop: 3}} />,
+                    headerTitleStyle: {
+                      fontWeight: 'bold',
+                      fontFamily: 'Rosarivo',
+                      fontSize: 23,
+                      marginLeft: '-10%',
+                    },
+                    headerShown: true,
+                    headerTintColor: '#C8FFF4',
+                    headerStyle: {
+                      backgroundColor: '#00B3A6',
+                      height: 75,
+                    },
+        }}
         />
         <Stack.Screen
           name='Home'
