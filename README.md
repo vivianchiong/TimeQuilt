@@ -1,6 +1,6 @@
 # TimeQuilt
 
-Time Quilt is a web application for helping the days stop blurring together.
+TimeQuilt is a cross-platform application for helping the days stop blurring together during quarantine.
 
 ## Requirements
 
